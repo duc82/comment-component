@@ -1,7 +1,13 @@
-import data from "../data.json" assert { type: "json" };
+import data from "./data.json" assert { type: "json" };
 const { comments } = data;
 const cards = document.querySelector(".cards");
 const form = document.querySelector("form");
+const card_delete = document.querySelector(".card_delete");
+const overlay = document.querySelector(".overlay");
+const modal = document.querySelector(".modal");
+const replyBtn = document.querySelectorAll(".card_reply");
+const form_reply = document.querySelectorAll(".form_reply");
+const modal_decline = document.querySelector(".modal_decline");
 
 let result = "";
 
@@ -55,6 +61,23 @@ comments.forEach((comment) => {
     </button>
   </div>
   </div>
+  <section class="form form_reply hidden">
+  <form>
+    <textarea
+      name="reply"
+      id="reply"
+      placeholder="Add a reply..."
+    ></textarea>
+    <div class="form_group">
+      <img
+        src="/images/avatars/image-juliusomo.png"
+        alt="juliusomo"
+        class="form_avatar"
+      />
+      <button type="submit" class="form_btn">REPLY</button>
+    </div>
+  </form>
+</section>
 </div>
 `;
 
@@ -161,3 +184,26 @@ comments.forEach((comment) => {
 });
 
 cards.innerHTML = result;
+
+const openModal = () => {
+  modal.style.display = "block";
+  overlay.style.display = "block";
+};
+
+const closeModal = () => {
+  modal.style.display = "none";
+  overlay.style.display = "none";
+};
+
+card_delete.onclick = openModal;
+
+overlay.onclick = closeModal;
+
+modal_decline.onclick = closeModal;
+
+replyBtn.forEach((reply, i) => {
+  reply.onclick = () => {
+    console.log("test");
+    form_reply[i].classList.toggle("hidden");
+  };
+});
